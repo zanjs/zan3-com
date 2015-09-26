@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>宠物木木 - 王海达博客</title>
+<link rel="stylesheet" type="text/css" href="spig.css">
+<style type="text/css">
+body {
+	font-family: "微软雅黑";
+	font-size: 12px/24px;
+	width: 1024px;
+	margin: auto;
+}
+code {
+	border: 1px solid #000;
+	display: block;
+	padding: 10px;
+	background-color: #cdcdcd;
+	margin: 2px 0px;
+}
+h1,h2,h3,h4,h5,h6 {
+	color: #339966;
+}
+</style>
+</head>
+
+<body>
+
+<h2>给WordPress添加宠物方法</h2>
+
+<p>这个宠物作者是木木，网站：http://www.dao-gu.com，王海达博客只是搬砖的o(╯□╰)o</p>
+<p>已经打包，下载地址和更详细的说明访问：<a href="http://blog.wanghaida.com/share/1226/" title="王海达博客">http://blog.wanghaida.com/share/1226/</a></p>
+<p>下面说一下Wordpress的添加方法，因为此插件是针对Wordpress写的</p>
+
+<h3>使用方法：</h3>
+
+<p>1、下载提供的脚本文件（1:js文件,1:png文件），说的话和网站都在js文件里修改，如果没加载jquery库还需要加载一下。</p>
+<p>2、WP后台编辑主题模板footer.php添加以下代码：</p>
+<code><pre>
+&lt;div id=&quot;spig&quot; class=&quot;spig&quot;&gt;
+	&lt;div id=&quot;message&quot;>加载中……&lt;/div&gt;
+	&lt;div id=&quot;mumu&quot; class=&quot;mumu&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</pre></code>
+<p>3、编辑主题样式表添加如下样式，或者直接引用<a href="http://blog.wanghaida.com/ad/spig/spig.css" target="_blank">http://blog.wanghaida.com/ad/spig/spig.css</a></p>
+<code><pre>
+/* 博客宠物 */
+.spig {
+	display:block;
+	width:150px;
+	height:190px;
+	position:absolute;
+	top: -200px;
+	left: 160px;
+	z-index:9999;
+}
+#message{
+	color :#191919;
+	border: 1px solid #c4c4c4;
+	background:#ddd;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	min-height:1em;
+	padding:5px;
+	top:-30px;
+	position:absolute;
+	text-align:center;
+	width:auto !important;
+	z-index:10000;
+	-moz-box-shadow:0 0 15px #eeeeee;
+	-webkit-box-shadow:0 0 15px #eeeeee;
+	border-color:#eeeeee;
+	box-shadow:0 0 15px #eeeeee;
+	outline:none;
+}
+.mumu{
+	width:150px;
+	height:190px;
+	cursor: move;
+	background:url(spig.png) no-repeat;
+}
+</pre></code>
+<p>4、在主题文件header.php添加以下代码，如果原来已有jQuery的就不用再加了</p>
+<code><pre>
+没有就添加这个
+&lt;script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"&gt;&lt;/script&gt;
+</pre></code>
+<code><pre>
+&lt;script type="text/javascript"&gt;
+&lt;?php 
+	if(is_home()){
+		echo 'var isindex=true;var title="";';
+	}
+	else{
+		echo 'var isindex=false;var title="',  get_the_title(),'";';
+	}
+?&gt;
+&lt;?php 
+	if((($display_name = wp_get_current_user()-&gt;display_name) != null)){
+		echo 'var visitor="',$display_name,'";';
+	}
+	else if(isset($_COOKIE['comment_author_'.COOKIEHASH])){
+		echo 'var visitor="',$_COOKIE['comment_author_'.COOKIEHASH],'";';
+	}
+	else{
+		echo 'var visitor="游客";';echo "\n";
+	}
+?&gt;
+&lt;/script&gt;
+&lt;script type="text/javascript" src="http://blog.wanghaida.com/ad/spig/spig.js"&gt;&lt;/script&gt;
+</pre></code>
+<p>5、注意事项：</p>
+<p>
+①如果代码无效，请检查js冲突<br />
+②请把spig.js改成你自己的目录<br />
+③自定义显示的消息，用jQuery选择器加上showMessage('信息')即可，自行参考spig.js<br />
+④关于天气代码，我自己申请的中国天气网的插件http://uc.weather.com.cn/，如果你的显示不出来，请到http://t.xidie.com/申请
+</p>
+<br />
+<!-- 宠物 -->
+<div id="spig" class="spig">
+    <div id="message">加载中……</div>
+    <div id="mumu" class="mumu"></div>
+</div>
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript">
+	var isindex=true;var title="";var visitor="游客";
+</script>
+<script type="text/javascript" src="spig.js"></script>  
+
+</body>
+</html>
